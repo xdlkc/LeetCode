@@ -6,7 +6,7 @@
 class Solution {
 
     public String longestPalindrome(String s) {
-        return centerExpandFun(s);
+        return manacher(s);
     }
 
     private String dpFun(String s) {
@@ -78,20 +78,43 @@ class Solution {
         return ret;
     }
 
-    public String manacherFun(String s) {
-        String ps = preProcess(s);
-        int center = 0;
-        int right = 0;
-        int[] P = new int[ps.length()];
+    public String manacher(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] len = new char[s.length() * 2 + 1];
+        len[0] = '#';
+        for (int i = 0; i < s.length(); i++) {
+            len[i * 2 + 1] = s.charAt(i);
+            len[i * 2 + 2] = '#';
+        }
+        int l = fun(len);
+        return 
 
-        int start = 0;
-        int end = 0;
-        int max = 0;
-        for (int i = 0; i < P.length; i++) {
-            if (max < P[i]) {
-                start = 
+    }
+    public String fun(char[] chs) {
+        int mx = 0;
+        int p0 = 0;
+        int ans = 0;
+        int[] len = new int[chs.length];
+        for (int i = 0; i < chs.length; i++) {
+            if (mx > i) {
+                len[i] = Math.min(mx-i, len[2 * p0 - i]);
+            } else {
+                len[i] = 1;
+            }
+            while (chs[i - len[i]] == chs[i + len[i]]) {
+                len[i]++;
+            }
+            if (len[i] + i > mx) {
+                p0 = i;
+                mx = i + len[i];
+            }
+            if (len[i] > ans) {
+                ans = len[i];
             }
         }
-        return "";
+        StringBuilder builder = new StringBuilder();
+        for (int i = )
     }
 }

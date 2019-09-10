@@ -5,18 +5,32 @@
  */
 class Solution {
     public int maxArea(int[] height) {
+        int i = 0;
+        int j = height.length - 1;
         int max = 0;
-        int i = 1;
-        while (i < height.length) {
-            for (int j = 0; j < height.length; j++) {
-                for (int k = i + j; k < height.length; k+=i) {
-                    int tmp = Math.min(height[j], height[k]) * i;
-                    if (tmp > max) {
-                        max = tmp;
-                    }
+        while (i < j) {
+            int tmp = Math.min(height[i], height[j]) * (j- i);
+            if (tmp > max) {
+                max = tmp;
+            }
+            if (height[i] < height[j]) {
+                i++;
+            } else {
+                j--;
+            }
+        }
+        return max;
+    }
+
+    public int exhasutive(int[] height) {
+        int max = 0;
+        for (int i = 0; i < height.length - 1; i++) {
+            for (int j = i + 1; j < height.length; j++) {
+                int sum = Math.min(height[i], height[j]) * (j - i);
+                if (sum > max) {
+                    max = sum;
                 }
             }
-            i += 1;
         }
         return max;
     }
